@@ -1,5 +1,6 @@
 # gulp前端集成解决方案（web端） 
 > 利用gulp完成对Sass文件的编译压缩、自动生成雪碧图、seajs的合并压缩及对以上任务进行实时监控。
+
 ##### 所需工具
 1. gulp
 2. gulp.spritesmith
@@ -18,6 +19,7 @@ var uglify = require('gulp-uglify');
 ```
 ##### 合成雪碧图
 > 这里可同时合并多个雪碧图，可在spriteFileNames数组添加新文件名，同时在指定的文件目录新建该文件。
+
 ```javascript
 /**
  * 需要合成图文件名
@@ -47,6 +49,7 @@ spriteFileNames.forEach(function(v, i) {
 ```
 ##### seajs模块合并压缩
 > 同样可实现多个入口文件的合并压缩。
+
 ```javascript
 /**
  * 需要模块合并的文件名
