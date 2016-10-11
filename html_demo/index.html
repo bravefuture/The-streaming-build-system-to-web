@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+	<div class="icon-dialogue"></div>
+	<div class="icon-video"></div>
+
+	<script src="../js/seajs/sea.js"></script>
+    <script type="text/javascript">
+        var config = seajs.config({
+            base: '../js',
+            alias: {
+				jquery: '../js/jquery/jquery.js'
+			},
+            map: [
+                [/^(.*\.(?:js))(.*)$/i, '$1?ver=20160921104708']
+            ]
+        });
+    </script>
+	<script>
+		seajs.use(['index/dist/index', 'sub/dist/sub', 'jquery'], function(index, sub) {
+			console.log('index: ' + index(3));
+			console.log('sub: ' + sub(3));
+		});
+	</script>
+</body>
+</html>

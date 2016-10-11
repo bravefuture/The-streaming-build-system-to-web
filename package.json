@@ -1,0 +1,26 @@
+{
+  "name": "The-streaming-build-system-to-web",
+  "version": "1.0.0",
+  "description": "The-streaming-build-system-to-web",
+  "homepage": "",
+  "scripts": {
+    "start": "npm link gulp gulp-sass gulp-spriter gulp.spritesmith gulp-seajs-combine gulp-uglify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bravefuture/The-streaming-build-system-to-web"
+  },
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "license": "",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-seajs-combine": "^0.3.3",
+    "gulp-spriter": "^1.1.5",
+    "gulp-uglify": "^2.0.0",
+    "gulp.spritesmith": "^6.2.1"
+  }
+}

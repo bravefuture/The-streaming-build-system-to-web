@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+// %
+%text-seo{ text-indent: -9999999px; overflow: hidden;}
+%text-right{ text-align: right;}
+%text-center{ text-align: center;}
+%clearfix{ *zoom: 1; 
+    &:before,  &:after { display: table; content: ""; line-height: 0;} 
+    &:after{ clear: both;}
+}
+%left{ float: left; display: inline;}
+%right{ float: right; display: inline;}
+%text-overflow{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}

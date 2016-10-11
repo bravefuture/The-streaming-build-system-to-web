@@ -1,0 +1,1 @@
+define("module_a/module_a",[],function(require,exports,module){var e=function(e){return e*e};module.exports=e}),define("sub/dist/sub",["module_a/module_a"],function(require,exports,module){var e=require("module_a/module_a"),u=function(u){return 3*e(u)};module.exports=u});

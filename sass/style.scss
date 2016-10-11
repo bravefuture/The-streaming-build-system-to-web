@@ -1,0 +1,27 @@
+@charset "UTF-8";
+/**
+ * 基础样式
+ */
+@import 'base';
+/**
+ * 引用雪碧图mixin
+ */
+@import '../images/icons_sprite/sprite';
+/**
+ * 版本号
+ */
+$version: '?v=201606031701';
+/**
+ * 背景图相对路径
+ */
+$url: '../images/';
+
+/**
+ * 引用雪碧图示例
+ */
+.icon-dialogue{ @include sprite($icon_dialogue);}
+.icon-video{ @include sprite($icon_video);}
+/**
+ * 引用背景图示例
+ */
+.bg{ background: url(#{$url}bg.png#{$version}) no-repeat;}
