@@ -4,10 +4,6 @@
  */
 @import 'base';
 /**
- * 引用雪碧图mixin
- */
-@import '../images/icons_sprite/sprite';
-/**
  * 版本号
  */
 $version: '?v=201606031701';
@@ -19,8 +15,10 @@ $url: '../images/';
 /**
  * 引用雪碧图示例
  */
-.icon-dialogue{ @include sprite($icon_dialogue);}
-.icon-video{ @include sprite($icon_video);}
+@import '../images/icons_sprite/sprite';
+@import 'iconName';
+@import '../images/icons2_sprite/sprite';
+@import 'iconName';
 /**
  * 引用背景图示例
  */

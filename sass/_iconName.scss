@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+/**
+ * 输出icon类名
+ */
+@each $icon in $spritesheet-sprites {
+    $icon-name: nth($icon, 10);
+    $icon-w: nth($icon, 5);
+    $icon-h: nth($icon, 6);
+    $icon-x: nth($icon, 3);
+    $icon-y: nth($icon, 4);
+    $icon-image: nth($icon, 9);
+    .#{$icon-name} { display: inline-block; width: $icon-w; height: $icon-h; background: url(#{$icon-image}) $icon-x $icon-y no-repeat;}
+}

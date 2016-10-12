@@ -6,6 +6,7 @@
 2. gulp.spritesmith
 3. gulp-sass
 4. gulp-seajs-combine
+5. gulp-livereload
 
 ##### 在根目录下新建Gulpfile.js
 
@@ -16,6 +17,7 @@ var spritesmith = require('gulp.spritesmith');
 var sass = require('gulp-sass');
 var seajs = require('gulp-seajs-combine');
 var uglify = require('gulp-uglify');
+var livereload = require('gulp-livereload');
 ```
 ##### 合成雪碧图
 > 这里可同时合并多个雪碧图，可在spriteFileNames数组添加新文件名，同时在指定的文件目录新建该文件。
@@ -24,12 +26,8 @@ var uglify = require('gulp-uglify');
 /**
  * 需要合成图文件名
  */
-var spriteFileNames = ['icons'];
+var spriteFileNames = ['icons', 'icons2'];
 var spriteTaskNames = [];
-/**
- * 版本号
- */
-var version = '?v=' + 201609141626;
 /**
  * 遍历合成雪碧图
  */
@@ -38,12 +36,12 @@ spriteFileNames.forEach(function(v, i) {
     gulp.task('sprite' + i, function() {
         var spriteData = gulp.src('./images/' + v + '/*.png').pipe(spritesmith({
             imgName: 'sprite.png',
-            imgPath: '../images/' + v + '_sprite/sprite.png' + version,
-            padding: 2,
+            imgPath: '../images/' + v + '_sprite/sprite.png',
+            padding: 5,
             cssName: 'sprite.scss',
             cssFormat: 'scss'
         }));
-        return spriteData.pipe(gulp.dest('images/' + v + '_sprite/'));
+        return spriteData.pipe(gulp.dest('images/' + v + '_sprite/')).pipe(livereload());
     });
 });
 ```
@@ -77,6 +75,17 @@ seajsFileNames.forEach(function(v, i) {
 	});	
 });
 ```
+##### 监控html文件
+```javascript
+/**
+ * 监控html文件
+ */
+gulp.task('html', function() {
+    gulp.src('./html_demo/*.html')
+        .pipe(livereload());
+});
+```
+
 ##### 编译sass
 ```javascript
 /**
@@ -85,15 +94,21 @@ seajsFileNames.forEach(function(v, i) {
 gulp.task('sass', spriteTaskNames, function() {
     return gulp.src('./sass/*.scss')
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(gulp.dest('./css'));
+        .pipe(gulp.dest('./css'))
+        .pipe(livereload());
 });
 ```
 ##### 实时监控
 ```javascript
+/**
+ * 实时监控
+ */
 gulp.task('watch', function() {
-    gulp.watch('./images/**/*.png', spriteTaskNames);
-    gulp.watch('./sass/*.scss', ['sass']);
-    gulp.watch('./js/**/**/*.js', seajsTastNames);
+	livereload.listen();
+    gulp.watch('images/**/*.png', spriteTaskNames.concat(['sass']));
+    gulp.watch('sass/*.scss', ['sass']);
+    gulp.watch('html_demo/*.html', ['html']);
+    gulp.watch('js/**/**/*.js', seajsTastNames);
 });
 ```
 ##### 指定默认任务

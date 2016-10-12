@@ -1,11 +1,4 @@
 /**
- * [gulp前端集成解决方案]
- * @update: 2016.10.11
- * @author: yongcheng0660@163.com
- * @github: https://github.com/bravefuture
- */
-
-/**
  * 1. 先全局安装所需npm插件
  * 2. 在package.json文件里修改"scripts"值，link所有npm插件
  * 3. 连接npm插件: $ npm start (首次编译时连接)
@@ -19,16 +12,13 @@ var spritesmith = require('gulp.spritesmith');
 var sass = require('gulp-sass');
 var seajs = require('gulp-seajs-combine');
 var uglify = require('gulp-uglify');
+var livereload = require('gulp-livereload');
 
 /**
  * 需要合成图文件名
  */
-var spriteFileNames = ['icons'];
+var spriteFileNames = ['icons', 'icons2'];
 var spriteTaskNames = [];
-/**
- * 版本号
- */
-var version = '?v=' + 201609141626;
 /**
  * 遍历合成雪碧图
  */
@@ -37,12 +27,12 @@ spriteFileNames.forEach(function(v, i) {
     gulp.task('sprite' + i, function() {
         var spriteData = gulp.src('./images/' + v + '/*.png').pipe(spritesmith({
             imgName: 'sprite.png',
-            imgPath: '../images/' + v + '_sprite/sprite.png' + version,
-            padding: 2,
+            imgPath: '../images/' + v + '_sprite/sprite.png',
+            padding: 5,
             cssName: 'sprite.scss',
             cssFormat: 'scss'
         }));
-        return spriteData.pipe(gulp.dest('images/' + v + '_sprite/'));
+        return spriteData.pipe(gulp.dest('images/' + v + '_sprite/')).pipe(livereload());
     });
 });
 
@@ -68,8 +58,17 @@ seajsFileNames.forEach(function(v, i) {
 	            mangle: {except: ['require', 'exports', 'module', '$']},
 	            compress: true
 	        }))
-	        .pipe(gulp.dest('./js/'+ v +'/dist/'));
+	        .pipe(gulp.dest('./js/'+ v +'/dist/'))
+	        .pipe(livereload());
 	});	
+});
+
+/**
+ * 监控html文件
+ */
+gulp.task('html', function() {
+    gulp.src('./html_demo/*.html')
+        .pipe(livereload());
 });
 
 /**
@@ -78,20 +77,22 @@ seajsFileNames.forEach(function(v, i) {
 gulp.task('sass', spriteTaskNames, function() {
     return gulp.src('./sass/*.scss')
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(gulp.dest('./css'));
+        .pipe(gulp.dest('./css'))
+        .pipe(livereload());
 });
 
 /**
  * 实时监控
  */
 gulp.task('watch', function() {
-    gulp.watch('./images/**/*.png', spriteTaskNames);
-    gulp.watch('./sass/*.scss', ['sass']);
-    gulp.watch('./js/**/**/*.js', seajsTastNames);
+	livereload.listen();
+    gulp.watch('images/**/*.png', spriteTaskNames.concat(['sass']));
+    gulp.watch('sass/*.scss', ['sass']);
+    gulp.watch('html_demo/*.html', ['html']);
+    gulp.watch('js/**/**/*.js', seajsTastNames);
 });
 
 /**
  * 指定默认任务
  */
 gulp.task('default', ['watch', 'sass'].concat(spriteTaskNames).concat(seajsTastNames));
-
